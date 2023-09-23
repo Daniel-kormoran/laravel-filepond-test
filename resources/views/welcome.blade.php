@@ -9,20 +9,21 @@
     <link href='https://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet'>
     <title>Filepond Test</title>
 
+    <meta name="_token" content="{{ csrf_token() }}"/>
+
     <style>
         body {
             font-family: 'Montserrat';
             padding-top: 80px;
         }
     </style>
-    <meta name="_token" content="{{ csrf_token() }}"/>
     <title>Document</title>
 </head>
 <body>
     <div class="container">
         <div class="card">
             <div class="card-body">
-                <h1 class="h1-addlomba">Add Posts</h1>
+                <h1>Add Posts</h1>
 
                 <form class="forms-tambah" action="/" method="post" enctype="multipart/form-data">
                     @csrf
@@ -39,7 +40,7 @@
                     <div class="form-group">
                         <label for="description">Description</label>
                         <input type="text" class="form-control" name="description" placeholder="Description">
-                        @error('title')
+                        @error('description')
                             <div>{{ $message }}</div>
                         @enderror
                     </div>
@@ -47,7 +48,7 @@
                     {{-- Multiple upload for Foto Lomba --}}
                     <div class="form-group">
                         <label for="image">Upload Image : </label>
-                        <input type="file" name="image" class="filepond"/>
+                        <input type="file" name="image" class="filepond" multiple/>
                     </div>
 
                     <div class="mt-3">
@@ -88,6 +89,16 @@
 
         // Create a FilePond instance
         const pond = FilePond.create(inputElement);
+
+        FilePond.setOptions({
+            server: {
+                process: '/upload',
+                revert: '/delete',
+                headers: {
+                    'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                }
+            },
+        });
 
     </script>
 </body>
