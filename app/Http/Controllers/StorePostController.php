@@ -34,13 +34,14 @@ class StorePostController extends Controller
         $post = Post::create($validator->validated());
 
         foreach($temporaryImages as $temporaryImage) {
-            Storage::copy('images/tmp'.$temporaryImage->folder.'/'.$temporaryImage->file, 'images/'.$temporaryImage->folder.'/'.$temporaryImage->file);
+            Storage::copy('images/tmp/'.$temporaryImage->folder.'/'.$temporaryImage->file, 'images/'.$temporaryImage->folder.'/'.$temporaryImage->file);
             Image::create([
                 'post_id' => $post->id,
                 'name' => $temporaryImage->file,
                 'path' => $temporaryImage->folder.'/'.$temporaryImage->file
             ]);
             Storage::deleteDirectory('images/tmp/'.$temporaryImage->folder);
+            $temporaryImage->delete();
         };
 
     return redirect('/');
