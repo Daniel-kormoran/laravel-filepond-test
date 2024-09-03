@@ -48,7 +48,10 @@
                     {{-- Multiple upload for Foto Lomba --}}
                     <div class="form-group">
                         <label for="image">Upload Image : </label>
-                        <input type="file" name="image" class="filepond" multiple/>
+                        <input type="file" class="form-control" name="image" class="filepond" multiple/>
+                        @error('file')
+                            <div>{{ $message }}</div>
+                        @enderror
                     </div>
 
                     <div class="mt-3">
@@ -61,21 +64,7 @@
     </div>
 
     <style>
-        h1 {
-            margin: 10px 10px;
-        }
-
-        .forms-tambah {
-            margin: 20px 10px;
-        }
-
-        input {
-            margin-bottom: 10px;
-        }
-
-        .forms-tambah.btn-tambah {
-            margin: 10px 10px;
-        }
+        
     </style>
 
     <script src="https://unpkg.com/filepond@^4/dist/filepond.js"></script>
